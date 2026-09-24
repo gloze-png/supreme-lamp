@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * This project is styled entirely with Tailwind utility classes in JSX.
+ * The rules below are the small set of truly global, cross-cutting
+ * concerns that Tailwind utilities can't express on a single element
+ * (a body-level class toggled from JS, the reduced-motion media query,
+ * and default appearance for elements markup doesn't fully control) —
+ * the same handful of rules a `@layer base` reset would carry in any
+ * Tailwind project. There is no bespoke per-component CSS left.
+ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans text-base font-normal leading-[26px] text-muted;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif text-ink;
+  }
+
+  /* Toggled directly on <body> by MobileNav / VideoModal (elements outside
+     the React tree that renders them), so it can't be a JSX className. */
+  body.locked {
+    @apply overflow-hidden;
+  }
+}
+
+/* Respect reduced-motion preferences across every Tailwind animation/transition */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Visible keyboard focus ring (Tailwind's preflight removes the default outline) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #0457aa;
+  outline-offset: 2px;
+}
